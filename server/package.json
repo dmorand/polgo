@@ -1,0 +1,22 @@
+{
+  "name": "polgo-server",
+  "version": "0.0.1",
+  "description": "Polgo Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dmorand/polgo.git"
+  },
+  "keywords": [
+    "polgo"
+  ],
+  "author": "David Morand",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmorand/polgo/issues"
+  },
+  "homepage": "https://github.com/dmorand/polgo#readme"
+}
