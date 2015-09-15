@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/dmorand/polgo/issues"
   },
-  "homepage": "https://github.com/dmorand/polgo#readme"
+  "homepage": "https://github.com/dmorand/polgo#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
 }
