@@ -21,5 +21,9 @@
   "homepage": "https://github.com/dmorand/polgo#readme",
   "dependencies": {
     "express": "^4.13.3"
+  },
+  "jshintConfig": {
+    "node": true,
+    "esnext": true
   }
 }
