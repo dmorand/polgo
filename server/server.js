@@ -1,8 +1,20 @@
-var express = require('express');
-var app = express();
+var Express = require('express');
+var Board = require('./board.js')
 
-app.get('/', function (req, res) {
-  res.json({status : "online"});
+var server = Express();
+
+server.get('/', function(request, response) {
+  response.json({
+    status: 'online'
+  });
+});
+
+server.get('/game/start', function(request, response) {
+  console.log(new Board());
+
+  response.json({
+    status: 'started'
+  });
 });
 
 var port = process.argv[2];
@@ -12,6 +24,6 @@ if (port === undefined) {
   process.exit(1);
 }
 
-var server = app.listen(port, function () {
-  console.log('Polgo server started on port %s', server.address().port);
+server.listen(port, function() {
+  console.log('Polgo server started on port %s', port);
 });
