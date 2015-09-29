@@ -1,7 +1,9 @@
 var Express = require('express');
-var Board = require('./board.js')
+var Uuid = require('uuid');
+var Game = require('./game.js');
 
 var server = Express();
+var games = {};
 
 server.get('/', function(request, response) {
   response.json({
@@ -10,11 +12,26 @@ server.get('/', function(request, response) {
 });
 
 server.get('/game/start', function(request, response) {
-  console.log(new Board());
+  var uuid = Uuid.v4();
+
+  games[uuid] = new Game();
 
   response.json({
-    status: 'started'
+    status: 'started',
+    uuid
   });
+});
+
+server.get('/game/:id', function(request, response) {
+  const game = games[request.params.id];
+
+  if (!game) {
+    response.status(404).end();
+    return;
+  }
+
+  response.set('Content-Type', 'text/plain');
+  response.send(game.render());
 });
 
 var port = process.argv[2];

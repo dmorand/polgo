@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/dmorand/polgo#readme",
   "dependencies": {
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "uuid":"^2.0.1"
   },
   "jshintConfig": {
     "node": true,
