@@ -1,3 +1,4 @@
+var Package = require('./package.json');
 const Express = require('express');
 const Uuid = require('uuid');
 const Game = require('./game.js');
@@ -21,15 +22,17 @@ function renderGame(game, response) {
 }
 
 server.get('/', function(request, response) {
-  var version = '0.0.1';
-  var status = 'online';
-
   response.json({
-    version, status
+    version: Package.version,
+    status: 'online'
   });
 });
 
-server.get('/game', function(request, response) {
+server.get('/game/list', function(request, response) {
+  response.json(Object.keys(games));
+});
+
+server.get('/game/create', function(request, response) {
   const uuid = Uuid.v4();
   games[uuid] = new Game();
 
