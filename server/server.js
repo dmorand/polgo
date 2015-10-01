@@ -1,4 +1,6 @@
-var Package = require('./package.json');
+const Package = require('./package.json');
+const Config = require('./config.json');
+
 const Express = require('express');
 const Uuid = require('uuid');
 const Game = require('./game.js');
@@ -75,13 +77,6 @@ server.get('/game/:id/white/:x/:y', function(request, response) {
   });
 });
 
-const port = process.argv[2];
-
-if (port === undefined) {
-  console.log('Usage: node server.js port');
-  process.exit(1);
-}
-
-server.listen(port, function() {
-  console.log('Polgo server started on port %s', port);
+server.listen(Config.port, function() {
+  console.log('Polgo server started on port %s', Config.port);
 });
