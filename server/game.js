@@ -33,7 +33,7 @@ function adjacent(moves, board, color, x, y) {
   return false;
 }
 
-function move(moves, board, color, x, y) {
+function play(moves, board, color, x, y) {
   if (outbounds(x, y)) return false;
   if (occupied(board, x, y)) return false;
   if (incorrectOrder(moves, color)) return false;
@@ -46,7 +46,7 @@ function move(moves, board, color, x, y) {
 }
 
 module.exports = class {
-  constructor(id) {
+  constructor(id, moves) {
     this.id = id;
     this.moves = [];
     this.board = [];
@@ -54,14 +54,18 @@ module.exports = class {
     for (let x = 0; x < SIZE; x++) {
       this.board.push([]);
     }
+
+    if (moves) {
+      moves.forEach(move => play(this.moves, this.board, move.color, move.x, move.y));
+    }
   }
 
-  black(x, y) {
-    return move(this.moves, this.board, BLACK, x, y);
+  playBlack(x, y) {
+    return play(this.moves, this.board, BLACK, x, y);
   }
 
-  white(x, y) {
-    return move(this.moves, this.board, WHITE, x, y);
+  playWhite(x, y) {
+    return play(this.moves, this.board, WHITE, x, y);
   }
 
   render() {
