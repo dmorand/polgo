@@ -65,6 +65,13 @@ module.exports = class {
     response.send(game.render());
   }
 
+  getScores(request, response) {
+    const game = findGame(request, response);
+    if (!game) return;
+
+    response.json(game.scores());
+  }
+
   getMoves(request, response) {
     const game = findGame(request, response);
     if (!game) return;

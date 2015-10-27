@@ -14,6 +14,7 @@ server.get('/game/list', service.listGames);
 server.get('/game/create', service.createGame);
 server.get('/game/:uuid/board', service.renderGame);
 server.get('/game/:uuid/moves', service.getMoves);
+server.get('/game/:uuid/scores', service.getScores);
 server.get('/game/:uuid/black/:x/:y', service.playBlack);
 server.get('/game/:uuid/white/:x/:y', service.playWhite);
 
