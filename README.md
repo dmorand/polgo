@@ -1,5 +1,7 @@
 # Polgo
 
+[![Build Status](https://travis-ci.org/dmorand/polgo.svg?branch=master)](https://travis-ci.org/dmorand/polgo)
+
 ## Description
 
 Polgo is a board game of strategy and territory that is similar to Go but with a focus on quick games.  The goal is to control the most territory while blocking the other player.  It can be played on a 8X8 chess board using Go stones.  
