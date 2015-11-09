@@ -3,7 +3,7 @@
 const Express = require('express');
 const FileSystem = require('fs');
 
-const Config = require('./config.json');
+const Config = require('../config.json');
 const Service = require('./service.js');
 
 const server = new Express();

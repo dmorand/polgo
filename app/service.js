@@ -3,8 +3,8 @@
 const Uuid = require('uuid');
 const FileSystem = require('fs');
 
-const Package = require('./package.json');
-const Config = require('./config.json');
+const Package = require('../package.json');
+const Config = require('../config.json');
 const Game = require('./game.js');
 
 const games = {};

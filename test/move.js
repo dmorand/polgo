@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const Move = require('../move.js');
+const Move = require('../app/move.js');
 
 describe("Move", function() {
   it("is properly created.", function() {
