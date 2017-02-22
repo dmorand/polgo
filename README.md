@@ -1,6 +1,6 @@
 # Polgo
 
-[![Build Status](https://travis-ci.org/dmorand/polgo.svg?branch=master)](https://travis-ci.org/dmorand/polgo)
+[![Build Status](https://travis-ci.org/dmorand/polgo-node.svg?branch=master)](https://travis-ci.org/dmorand/polgo-node)
 
 ## Description
 
