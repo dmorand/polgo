@@ -4,7 +4,7 @@
 
 ## Description
 
-Polgo is a board game of strategy and territory that is similar to Go but with a focus on quick games.  The goal is to control the most territory while blocking the other player.  It can be played on a 8X8 chess board using Go stones.  
+Polgo is a board game of strategy and territory that is similar to Go but with a focus on quick games.  The goal is to control the most territory while blocking the other player.  It can be played on a 8X8 chess board using Go stones.
 
 ## Rules
 
@@ -17,3 +17,12 @@ Polgo is a board game of strategy and territory that is similar to Go but with a
 
 1. Each stone count for 1 point
 2. Each empty tile in a player territory count for 2 points
+
+# Start Application
+
+`node .`
+
+# Run Tests
+
+`npm test`
+

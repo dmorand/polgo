@@ -20,10 +20,10 @@
   },
   "homepage": "https://github.com/dmorand/polgo#readme",
   "dependencies": {
-    "chai": "^3.4.0",
-    "express": "^4.13.3",
-    "mocha": "^2.3.3",
-    "uuid": "^2.0.1"
+    "chai": "^4.1.2",
+    "express": "^4.16.2",
+    "mocha": "^4.0.1",
+    "uuid": "^3.1.0"
   },
   "jshintConfig": {
     "node": true,

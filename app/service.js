@@ -22,7 +22,7 @@ function findGame(request, response) {
 function writeGame(uuid, game) {
   const filename = Config.gameDirectory + '/' + uuid;
   const data = JSON.stringify(game.moves, null, '  ');
-  FileSystem.writeFile(filename, data);
+  FileSystem.writeFile(filename, data, error => {if(error) console.error(error)});
 }
 
 module.exports = class {
