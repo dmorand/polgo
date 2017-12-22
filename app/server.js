@@ -9,14 +9,17 @@ const Service = require('./service.js');
 const server = new Express();
 const service = new Service();
 
+// GET
 server.get('/', service.getStatus);
 server.get('/game/list', service.listGames);
-server.get('/game/create', service.createGame);
 server.get('/game/:uuid/board', service.renderGame);
 server.get('/game/:uuid/moves', service.getMoves);
 server.get('/game/:uuid/scores', service.getScores);
-server.get('/game/:uuid/black/:x/:y', service.playBlack);
-server.get('/game/:uuid/white/:x/:y', service.playWhite);
+
+// POST
+server.post('/game/create', service.createGame);
+server.post('/game/:uuid/black/:x/:y', service.playBlack);
+server.post('/game/:uuid/white/:x/:y', service.playWhite);
 
 function loadFiles(error, files) {
   if(error) throw error;

@@ -48,12 +48,14 @@ module.exports = class {
   createGame(request, response) {
     const uuid = Uuid.v4();
     const game = new Game();
+    const board = game.render(false);
 
     games[uuid] = game;
     writeGame(uuid, game);
 
     response.json({
-      uuid
+      uuid,
+      board,
     });
   }
 
@@ -61,8 +63,10 @@ module.exports = class {
     const game = findGame(request, response);
     if (!game) return;
 
+    const splitRows = request.query.splitRows === 'true';
+
     response.set('Content-Type', 'text/plain');
-    response.send(game.render());
+    response.send(game.render(splitRows));
   }
 
   getScores(request, response) {

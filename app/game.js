@@ -140,7 +140,7 @@ module.exports = class {
     };
   }
 
-  render() {
+  render(splitRows) {
     let renderedBoard = '';
     const board = this.board;
 
@@ -150,7 +150,9 @@ module.exports = class {
         renderedBoard += tile ? tile : '.';
       }
 
-      renderedBoard += '\n';
+      if (splitRows) {
+        renderedBoard += '\n';
+      }
     }
 
     return renderedBoard;
