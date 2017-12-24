@@ -7,7 +7,8 @@ const BOARD_SIZE = 8;
 const FREE_MOVES = 4;
 const BLACK = 'B';
 const WHITE = 'W';
-
+const LEGAL = 'L';
+const ILLEGAL = 'I';
 
 function outbounds(x, y) {
   return x < 0 || x >= BOARD_SIZE || y < 0 || y >= BOARD_SIZE;
@@ -83,12 +84,17 @@ function finished(moves, board) {
   return isFinished;
 }
 
-function play(moves, board, color, x, y) {
+function isLegal(moves, board, color, x, y) {
   if (outbounds(x, y)) return false;
   if (occupied(board, x, y)) return false;
   if (incorrectOrder(moves, color)) return false;
   if (!adjacent(moves, board, color, x, y)) return false;
   if (finished(moves, board)) return false;
+  return true;
+}
+
+function play(moves, board, color, x, y) {
+  if (!isLegal(moves, board, color, x, y)) return false;
 
   moves.push(new Move(x, y, color));
   board[x][y] = color;
@@ -119,6 +125,14 @@ module.exports = class {
     return play(this.moves, this.board, WHITE, x, y);
   }
 
+  next() {
+    if (this.moves.length === 0) return WHITE;
+
+    const [{color: previous}] = this.moves.slice(-1);
+    if (previous === BLACK) return WHITE;
+    return BLACK;
+  }
+
   scores() {
     let black = this.moves.filter(move => move.color === BLACK).length;
     let white = this.moves.length - black;
@@ -135,19 +149,27 @@ module.exports = class {
       }
     });
 
-    return {
-      black, white
-    };
+    let scores = {};
+    scores[BLACK] = black;
+    scores[WHITE] = white;
+    return scores;
   }
 
   render(splitRows) {
     let renderedBoard = '';
     const board = this.board;
+    const next = this.next();
 
     for (let x = 0; x < BOARD_SIZE; x++) {
       for (let y = 0; y < BOARD_SIZE; y++) {
-        const tile = this.board[x][y];
-        renderedBoard += tile ? tile : '.';
+        const tile = board[x][y];
+        if (tile) {
+          renderedBoard += tile;
+        } else if(isLegal(this.moves, board, next, x, y)) {
+          renderedBoard += LEGAL;
+        } else {
+          renderedBoard += ILLEGAL;
+        }
       }
 
       if (splitRows) {

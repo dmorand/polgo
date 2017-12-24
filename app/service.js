@@ -59,28 +59,16 @@ module.exports = class {
     });
   }
 
-  renderGame(request, response) {
+  getGame(request, response) {
     const game = findGame(request, response);
     if (!game) return;
 
-    const splitRows = request.query.splitRows === 'true';
-
-    response.set('Content-Type', 'text/plain');
-    response.send(game.render(splitRows));
-  }
-
-  getScores(request, response) {
-    const game = findGame(request, response);
-    if (!game) return;
-
-    response.json(game.scores());
-  }
-
-  getMoves(request, response) {
-    const game = findGame(request, response);
-    if (!game) return;
-
-    response.json(game.moves);
+    const next = game.next();
+    response.json({
+      next: next,
+      scores: game.scores(),
+      board: game.render(),
+    });
   }
 
   playBlack(request, response) {

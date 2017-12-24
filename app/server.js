@@ -11,10 +11,8 @@ const service = new Service();
 
 // GET
 server.get('/', service.getStatus);
-server.get('/game/list', service.listGames);
-server.get('/game/:uuid/board', service.renderGame);
-server.get('/game/:uuid/moves', service.getMoves);
-server.get('/game/:uuid/scores', service.getScores);
+server.get('/games', service.listGames);
+server.get('/games/:uuid', service.getGame);
 
 // POST
 server.post('/game/create', service.createGame);
