@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const Move = require('./move.js');
 const Region = require('./region.js');
 
@@ -93,15 +94,6 @@ function isLegal(moves, board, color, x, y) {
   return true;
 }
 
-function play(moves, board, color, x, y) {
-  if (!isLegal(moves, board, color, x, y)) return false;
-
-  moves.push(new Move(x, y, color));
-  board[x][y] = color;
-
-  return true;
-}
-
 module.exports = class {
   constructor(id, moves) {
     this.id = id;
@@ -113,16 +105,17 @@ module.exports = class {
     }
 
     if (moves) {
-      moves.forEach(move => play(this.moves, this.board, move.color, move.x, move.y));
+      moves.forEach(move => this.play(move.color, move.x, move.y));
     }
   }
 
-  playBlack(x, y) {
-    return play(this.moves, this.board, BLACK, x, y);
-  }
+  play(color, x, y) {
+    if (!isLegal(this.moves, this.board, color, x, y)) return false;
 
-  playWhite(x, y) {
-    return play(this.moves, this.board, WHITE, x, y);
+    this.moves.push(new Move(x, y, color));
+    this.board[x][y] = color;
+
+    return true;
   }
 
   next() {
@@ -155,7 +148,7 @@ module.exports = class {
     return scores;
   }
 
-  render(splitRows) {
+  render() {
     let renderedBoard = '';
     const board = this.board;
     const next = this.next();
@@ -171,12 +164,8 @@ module.exports = class {
           renderedBoard += ILLEGAL;
         }
       }
-
-      if (splitRows) {
-        renderedBoard += '\n';
-      }
     }
 
-    return renderedBoard;
+    return _.chunk(renderedBoard, BOARD_SIZE);
   }
 };

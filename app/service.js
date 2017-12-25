@@ -71,33 +71,16 @@ module.exports = class {
     });
   }
 
-  playBlack(request, response) {
+  play(request, response) {
     const game = findGame(request, response);
     if (!game) return;
 
-    const legal = game.playBlack(request.params.x, request.params.y);
+    const legal = game.play(request.params.x, request.params.y, request.params.color);
 
     if (legal) {
       writeGame(request.params.uuid, game);
     }
 
-    response.json({
-      legal
-    });
-  }
-
-  playWhite(request, response) {
-    const game = findGame(request, response);
-    if (!game) return;
-
-    const legal = game.playWhite(request.params.x, request.params.y);
-
-    if (legal) {
-      writeGame(request.params.uuid, game);
-    }
-
-    response.json({
-      legal
-    });
+    getGame(request, response);
   }
 };

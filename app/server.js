@@ -15,9 +15,8 @@ server.get('/games', service.listGames);
 server.get('/games/:uuid', service.getGame);
 
 // POST
-server.post('/game/create', service.createGame);
-server.post('/game/:uuid/black/:x/:y', service.playBlack);
-server.post('/game/:uuid/white/:x/:y', service.playWhite);
+server.post('/games', service.createGame);
+server.post('/games/:uuid', service.play);
 
 function loadFiles(error, files) {
   if(error) throw error;
