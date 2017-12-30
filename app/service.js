@@ -19,68 +19,74 @@ function findGame(request, response) {
   return game;
 }
 
-function writeGame(uuid, game) {
-  const filename = Config.gameDirectory + '/' + uuid;
-  const data = JSON.stringify(game.moves, null, '  ');
-  FileSystem.writeFile(filename, data, error => {if(error) console.error(error)});
+function loadGame(uuid) {
+  FileSystem.readFile(Config.gameDirectory + '/' + uuid, function(error, data) {
+    if (error) throw error;
+    const moves = JSON.parse(data);
+    games[uuid] = new Game(uuid, moves);
+  });
 }
 
-module.exports = class {
-  loadGame(uuid) {
-    FileSystem.readFile(Config.gameDirectory + '/' + uuid, function(error, data) {
-      if (error) throw error;
-      const moves = JSON.parse(data);
-      games[uuid] = new Game(uuid, moves);
-    });
+function getStatus(request, response) {
+  response.json({
+    version: Package.version,
+    status: 'online'
+  });
+}
+
+function listGames(request, response) {
+  response.json(Object.keys(games));
+}
+
+function getGame(request, response) {
+  const game = findGame(request, response);
+  if (!game) return;
+
+  writeGameToResponse(game, response);
+}
+
+function createGame(request, response) {
+  const gameId = Uuid.v4();
+  const game = new Game(gameId);
+  games[gameId] = game;
+
+  writeMovesToFile(game);
+  writeGameToResponse(game, response);
+}
+
+function play(request, response) {
+  const game = findGame(request, response);
+  if (!game) return;
+
+  const legal = game.play(request.params.x, request.params.y, request.params.color);
+
+  if (legal) {
+    writeGame(request.params.uuid, game);
   }
 
-  getStatus(request, response) {
-    response.json({
-      version: Package.version,
-      status: 'online'
-    });
-  }
+  writeGameToResponse(game, response);
+}
 
-  listGames(request, response) {
-    response.json(Object.keys(games));
-  }
+function writeGameToResponse(game, response) {
+  response.json({
+    id: game.id,
+    next: game.next(),
+    scores: game.scores(),
+    board: game.render(),
+  });
+}
 
-  createGame(request, response) {
-    const uuid = Uuid.v4();
-    const game = new Game();
-    const board = game.render(false);
+function writeMovesToFile(game) {
+  const filename = Config.gameDirectory + '/' + game.id;
+  const data = JSON.stringify(game.moves, null, '  ');
+  FileSystem.writeFile(filename, data, error => { if (error) console.error(error) });
+}
 
-    games[uuid] = game;
-    writeGame(uuid, game);
-
-    response.json({
-      uuid,
-      board,
-    });
-  }
-
-  getGame(request, response) {
-    const game = findGame(request, response);
-    if (!game) return;
-
-    const next = game.next();
-    response.json({
-      next: next,
-      scores: game.scores(),
-      board: game.render(),
-    });
-  }
-
-  play(request, response) {
-    const game = findGame(request, response);
-    if (!game) return;
-
-    const legal = game.play(request.params.x, request.params.y, request.params.color);
-
-    if (legal) {
-      writeGame(request.params.uuid, game);
-    }
-
-    getGame(request, response);
-  }
+module.exports = {
+  createGame,
+  getGame,
+  getStatus,
+  loadGame,
+  listGames,
+  play,
 };

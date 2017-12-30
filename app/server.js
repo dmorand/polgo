@@ -7,20 +7,19 @@ const Config = require('../config.json');
 const Service = require('./service.js');
 
 const server = new Express();
-const service = new Service();
 
 // GET
-server.get('/', service.getStatus);
-server.get('/games', service.listGames);
-server.get('/games/:uuid', service.getGame);
+server.get('/', Service.getStatus);
+server.get('/games', Service.listGames);
+server.get('/games/:uuid', Service.getGame);
 
 // POST
-server.post('/games', service.createGame);
-server.post('/games/:uuid', service.play);
+server.post('/games', Service.createGame);
+server.post('/games/:uuid', Service.play);
 
 function loadFiles(error, files) {
-  if(error) throw error;
-  files.forEach(file => service.loadGame(file));
+  if (error) throw error;
+  files.forEach(file => Service.loadGame(file));
 }
 
 server.listen(Config.port, function() {
