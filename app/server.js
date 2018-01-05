@@ -6,16 +6,16 @@ const FileSystem = require('fs');
 const Config = require('../config.json');
 const Service = require('./service.js');
 
-const server = new Express();
+const server = Express().use(Express.json());
 
 // GET
 server.get('/', Service.getStatus);
 server.get('/games', Service.listGames);
-server.get('/games/:uuid', Service.getGame);
+server.get('/games/:gameId', Service.getGame);
 
 // POST
 server.post('/games', Service.createGame);
-server.post('/games/:uuid', Service.play);
+server.post('/games/:gameId', Service.play);
 
 function loadFiles(error, files) {
   if (error) throw error;

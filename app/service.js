@@ -10,7 +10,7 @@ const Game = require('./game.js');
 const games = {};
 
 function findGame(request, response) {
-  const game = games[request.params.uuid];
+  const game = games[request.params.gameId];
 
   if (!game) {
     response.status(404).end();
@@ -19,11 +19,11 @@ function findGame(request, response) {
   return game;
 }
 
-function loadGame(uuid) {
-  FileSystem.readFile(Config.gameDirectory + '/' + uuid, function(error, data) {
+function loadGame(gameId) {
+  FileSystem.readFile(Config.gameDirectory + '/' + gameId, function(error, data) {
     if (error) throw error;
     const moves = JSON.parse(data);
-    games[uuid] = new Game(uuid, moves);
+    games[gameId] = new Game(gameId, moves);
   });
 }
 
@@ -58,10 +58,11 @@ function play(request, response) {
   const game = findGame(request, response);
   if (!game) return;
 
-  const legal = game.play(request.params.x, request.params.y, request.params.color);
+  const body = request.body;
+  const legal = game.play(body.row, body.column);
 
   if (legal) {
-    writeGame(request.params.uuid, game);
+    writeMovesToFile(game);
   }
 
   writeGameToResponse(game, response);

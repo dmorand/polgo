@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = class {
-  constructor(x, y, color) {
+  constructor(row, column, color) {
     this.time = new Date().getTime();
-    this.x = x;
-    this.y = y;
+    this.row = row;
+    this.column = column;
     this.color = color;
   }
 };

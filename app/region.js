@@ -1,7 +1,7 @@
 'use strict';
 
-function toInteger(x, y) {
-  return x * 10 + y;
+function toInteger(row, column) {
+  return row*10 + column;
 }
 
 module.exports = class {
@@ -14,11 +14,11 @@ module.exports = class {
     this.colors.add(color);
   }
 
-  addTile(x, y) {
-    this.tiles.add(toInteger(x, y));
+  addTile(row, column) {
+    this.tiles.add(toInteger(row, column));
   }
 
-  hasTile(x, y) {
-    return this.tiles.has(toInteger(x, y));
+  hasTile(row, column) {
+    return this.tiles.has(toInteger(row, column));
   }
 };
