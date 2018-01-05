@@ -81,7 +81,7 @@ function finished(moves, board) {
   if (moves.length < 2 * BOARD_SIZE) return false;
 
   var isFinished = true;
-  mapTerritory(board).forEach(region => isFinished &= region.owners.size === 1);
+  mapTerritory(board).forEach(region => isFinished &= region.colors.size === 1);
   return isFinished;
 }
 
@@ -105,7 +105,7 @@ module.exports = class {
     }
 
     if (moves) {
-      moves.forEach(move => this.play(move.color, move.row, move.column));
+      moves.forEach(move => this.play(move.row, move.column));
     }
   }
 
